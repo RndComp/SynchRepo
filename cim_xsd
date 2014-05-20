@@ -1,0 +1,88 @@
+//
+// uploaded CIM.xsd as script on Tue May 20 10:20:07 EST 2014
+//
+create xml-parser cim_xsd
+set version 1.0
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:complexType name="logical.Country">
+<xs:sequence>
+<xs:element minOccurs="0" name="countryKey" type="xs:integer"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="logical.Organisation">
+<xs:sequence>
+<xs:element minOccurs="0" name="abn" type="xs:string"/>
+<xs:element minOccurs="0" name="organisationKey" type="xs:integer"/>
+<xs:element minOccurs="0" name="organisationName" type="xs:string"/>
+<xs:element minOccurs="0" name="organisationType" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="logical.Person">
+<xs:sequence>
+<xs:element minOccurs="0" name="birthDate" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="citizenship" type="logical.Country"/>
+<xs:element minOccurs="0" name="communication" type="xs:string"/>
+<xs:element minOccurs="0" name="countryOfBirth" type="logical.County"/>
+<xs:element minOccurs="0" name="educationlevel" type="xs:string"/>
+<xs:element minOccurs="0" name="ethnicgroup" type="xs:string"/>
+<xs:element minOccurs="0" name="familyName" type="xs:string"/>
+<xs:element minOccurs="0" name="gender" type="xs:string"/>
+<xs:element minOccurs="0" name="givenName" type="xs:string"/>
+<xs:element minOccurs="0" name="maritalStatus" type="xs:string"/>
+<xs:element minOccurs="0" name="marriagestatus" type="xs:string"/>
+<xs:element minOccurs="0" name="medicareNumber" type="xs:integer"/>
+<xs:element minOccurs="0" name="middlename" type="xs:string"/>
+<xs:element minOccurs="0" name="monthlyincome" type="xs:integer"/>
+<xs:element minOccurs="0" name="motherMaidenName" type="xs:string"/>
+<xs:element minOccurs="0" name="namePrefix" type="xs:string"/>
+<xs:element minOccurs="0" name="nameSuffix" type="xs:string"/>
+<xs:element minOccurs="0" name="nameText" type="xs:string"/>
+<xs:element minOccurs="0" name="nameUse" type="xs:string"/>
+<xs:element minOccurs="0" name="nameUsePeriod" type="logical.Period"/>
+<xs:element minOccurs="0" name="nationalityID" type="xs:string"/>
+<xs:element minOccurs="0" name="occupation" type="xs:string"/>
+<xs:element minOccurs="0" name="occupationID" type="xs:string"/>
+<xs:element minOccurs="0" name="organisation" type="logical.Organisation"/>
+<xs:element minOccurs="0" name="personAge" type="xs:integer"/>
+<xs:element minOccurs="0" name="personKey" type="xs:integer"/>
+<xs:element minOccurs="0" name="personName" type="xs:string"/>
+<xs:element minOccurs="0" name="photo" type="logical.Image"/>
+<xs:element minOccurs="0" name="primaryspokenlanguage" type="xs:string"/>
+<xs:element minOccurs="0" name="religiousgroup" type="xs:string"/>
+<xs:element minOccurs="0" name="spouseeducation" type="xs:string"/>
+<xs:element minOccurs="0" name="spouseoccupation" type="xs:string"/>
+<xs:element minOccurs="0" name="weddinganniversarydate" type="xs:date"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="logical.County">
+<xs:sequence>
+<xs:element minOccurs="0" name="countyKey" type="xs:integer"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="logical.Image">
+<xs:sequence>
+<xs:element minOccurs="0" name="imageKey" type="xs:integer"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="logical.Employee">
+<xs:sequence>
+<xs:element minOccurs="0" name="employeeEndDate" type="xs:date"/>
+<xs:element minOccurs="0" name="employeeID" type="xs:string"/>
+<xs:element minOccurs="0" name="employeeKey" type="xs:integer"/>
+<xs:element minOccurs="0" name="employeeOf" type="logical.Organisation"/>
+<xs:element minOccurs="0" name="employeeStartDate" type="xs:date"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="logical.Period"/>
+<xs:element name="person" type="logical.Person"/>
+</xs:schema>
+
+end
+//
+// create a data model bundle referencing the above metamodel
+//
+create datamodelbundle cim_xsd
+	set generator xml-parser
+	set metadata cim_xsd
+end
+
