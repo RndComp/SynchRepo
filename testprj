@@ -1,0 +1,42 @@
+//========================================================================
+// Script created by the Script Wizard Mon May 19 15:54:43 EST 2014
+//========================================================================
+// Solution Script
+// ---------------
+// Command and control for the solution (un-comment to use)
+// stop solution testprj
+
+create solution testprj
+	set journaling false
+	set tracing true
+	set version 1.0.1
+	create ftp-adapter-outbound ftp_adapter_outbound_1
+		set subscribequeue channel_1
+	end
+
+	create messagechannel channel_1
+		set bustype direct
+		set parser xml-parser.xml_parser_1
+		set address channel_1
+	end
+
+	create xml-parser xml_parser_1
+		set datamodelbundle cim_xsd
+		set rootelementname person
+		set namespace NULL_NAMESPACE_URI
+	end
+
+	create file-adapter-inbound fileadapterinbound_1
+		set publishqueue channel_1
+		set twoway false
+		set cron 0/10 * * * * ?
+	end
+
+end
+
+
+// More command and control for the solution (un-comment to use)
+// reload solution testprj
+
+// start solution testprj
+
