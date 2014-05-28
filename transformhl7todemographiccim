@@ -1,0 +1,178 @@
+//========================================================================
+// Script created by the Script Wizard Wed May 28 14:04:28 EST 2014
+//========================================================================
+// Solution Script
+// ---------------
+// Command and control for the solution (un-comment to use)
+// stop solution transformhl7todemographiccim
+
+create solution transformhl7todemographiccim
+	set journaling false
+	set tracing true
+	set version 1.0.8
+	create xml-parser xml_parser_demographiccim
+		set datamodelbundle peopleandcommunities_-_logical_-_23-04-14_xsd
+		set rootelementname person
+		set namespace NULL_NAMESPACE_URI
+	end
+
+	create messagechannel channel_1
+		set parser hl7-parser.hl7_parser_1
+	end
+
+	create file-adapter-inbound fileadapterinbound_pollhl7message
+		set publishqueue channel_1
+		set twoway false
+		set autocreatedirectories false
+		set cron 0/10 * * * * ?
+		set directory C:\Work\TelstraHealth\Spine\synchronicity\hl7in
+	end
+
+	create messagechannel channel_cimout
+		set parser xml-parser.xml_parser_demographiccim
+		set public true
+	end
+
+	create simple-transform simple_transform_demographiccim
+		set publishqueue channel_cimout
+		set subscribequeue channel_1
+		set simple simple_transform_demographiccim
+	end
+
+	create hl7-parser hl7_parser_1
+		set datamodelbundle hl7-structures-v231-2.1
+		set messagestructure REF_I12
+	end
+
+end
+
+
+// More command and control for the solution (un-comment to use)
+// reload solution transformhl7todemographiccim
+
+// start solution transformhl7todemographiccim
+
+
+create simple-transform transformhl7todemographiccim.simple_transform_demographiccim
+{
+  "name" : "",
+  "sourcedatamodel" : "channel_1",
+  "targetdatamodel" : "channel_cimout",
+  "links" : [ {
+    "targetPath" : "/FamilyName",
+    "functions" : [ ],
+    "sourceModel" : "channel_1",
+    "absoluteSourcePath" : "/PID/PatientName[0]/FamilyLastName/FamilyName",
+    "sourcePath" : "/PID/PatientName[0]/FamilyLastName/FamilyName",
+    "absoluteTargetPath" : "/FamilyName"
+  }, {
+    "targetPath" : "/GivenName",
+    "functions" : [ ],
+    "sourceModel" : "channel_1",
+    "absoluteSourcePath" : "/PID/PatientName[0]/GivenName",
+    "sourcePath" : "/PID/PatientName[0]/GivenName",
+    "absoluteTargetPath" : "/GivenName"
+  }, {
+    "targetPath" : "/Middlename",
+    "functions" : [ ],
+    "sourceModel" : "channel_1",
+    "absoluteSourcePath" : "/PID/PatientName[0]/MiddleInitialOrName",
+    "sourcePath" : "/PID/PatientName[0]/MiddleInitialOrName",
+    "absoluteTargetPath" : "/Middlename"
+  }, {
+    "targetPath" : "/NameSuffix",
+    "functions" : [ ],
+    "sourceModel" : "channel_1",
+    "absoluteSourcePath" : "/PID/PatientName[0]/SuffixEgJRorIII",
+    "sourcePath" : "/PID/PatientName[0]/SuffixEgJRorIII",
+    "absoluteTargetPath" : "/NameSuffix"
+  }, {
+    "targetPath" : "/NamePrefix",
+    "functions" : [ ],
+    "sourceModel" : "channel_1",
+    "absoluteSourcePath" : "/PID/PatientName[0]/PrefixEgDR",
+    "sourcePath" : "/PID/PatientName[0]/PrefixEgDR",
+    "absoluteTargetPath" : "/NamePrefix"
+  }, {
+    "targetPath" : "/MotherMaidenName",
+    "functions" : [ ],
+    "sourceModel" : "channel_1",
+    "absoluteSourcePath" : "/PID/MotherSMaidenName[0]",
+    "sourcePath" : "/PID/MotherSMaidenName[0]",
+    "absoluteTargetPath" : "/MotherMaidenName"
+  }, {
+    "targetPath" : "/Gender",
+    "functions" : [ ],
+    "sourceModel" : "channel_1",
+    "absoluteSourcePath" : "/PID/Sex",
+    "sourcePath" : "/PID/Sex",
+    "absoluteTargetPath" : "/Gender"
+  }, {
+    "targetPath" : "/Address/ContactAddress/AddressLineOne",
+    "functions" : [ ],
+    "sourceModel" : "channel_1",
+    "absoluteSourcePath" : "/PID/PatientAddress[0]/StreetAddress",
+    "sourcePath" : "/PID/PatientAddress[0]/StreetAddress",
+    "absoluteTargetPath" : "/Address/ContactAddress/AddressLineOne"
+  }, {
+    "targetPath" : "/Address/ContactAddress/AddressType",
+    "functions" : [ ],
+    "sourceModel" : "channel_1",
+    "absoluteSourcePath" : "/PID/PatientAddress[0]/AddressType",
+    "sourcePath" : "/PID/PatientAddress[0]/AddressType",
+    "absoluteTargetPath" : "/Address/ContactAddress/AddressType"
+  }, {
+    "targetPath" : "/ContactDetails/PhoneWork",
+    "functions" : [ ],
+    "sourceModel" : "channel_1",
+    "absoluteSourcePath" : "/PID/PhoneNumberHome[0]/TelephoneNumber",
+    "sourcePath" : "/PID/PhoneNumberHome[0]/TelephoneNumber",
+    "absoluteTargetPath" : "/ContactDetails/PhoneWork"
+  }, {
+    "targetPath" : "/ContactDetails/ContactAddress/ContactEmail",
+    "functions" : [ ],
+    "sourceModel" : "channel_1",
+    "absoluteSourcePath" : "/PID/PhoneNumberHome[0]/EmailAddress",
+    "sourcePath" : "/PID/PhoneNumberHome[0]/EmailAddress",
+    "absoluteTargetPath" : "/ContactDetails/ContactAddress/ContactEmail"
+  }, {
+    "targetPath" : "/ContactDetails/ContactEmail",
+    "functions" : [ ],
+    "sourceModel" : "channel_1",
+    "absoluteSourcePath" : "/PID/PhoneNumberBusiness[0]/EmailAddress",
+    "sourcePath" : "/PID/PhoneNumberBusiness[0]/EmailAddress",
+    "absoluteTargetPath" : "/ContactDetails/ContactEmail"
+  }, {
+    "targetPath" : "/Primaryspokenlanguage",
+    "functions" : [ ],
+    "sourceModel" : "channel_1",
+    "absoluteSourcePath" : "/PID/PrimaryLanguage/Identifier",
+    "sourcePath" : "/PID/PrimaryLanguage/Identifier",
+    "absoluteTargetPath" : "/Primaryspokenlanguage"
+  }, {
+    "targetPath" : "/MaritalStatus",
+    "functions" : [ ],
+    "sourceModel" : "channel_1",
+    "absoluteSourcePath" : "/PID/MaritalStatus/Identifier",
+    "sourcePath" : "/PID/MaritalStatus/Identifier",
+    "absoluteTargetPath" : "/MaritalStatus"
+  }, {
+    "targetPath" : "/Ethnicgroup",
+    "functions" : [ ],
+    "sourceModel" : "channel_1",
+    "absoluteSourcePath" : "/PID/EthnicGroup[0]/Identifier",
+    "sourcePath" : "/PID/EthnicGroup[0]/Identifier",
+    "absoluteTargetPath" : "/Ethnicgroup"
+  }, {
+    "targetPath" : "/BirthDate",
+    "functions" : [ {
+      "functionparam" : "\"yyyyMMdd\"",
+      "function" : "parseDateLenient"
+    } ],
+    "sourceModel" : "channel_1",
+    "absoluteSourcePath" : "/PID/DateTimeOfBirth",
+    "sourcePath" : "/PID/DateTimeOfBirth",
+    "absoluteTargetPath" : "/BirthDate"
+  } ]
+}
+end
